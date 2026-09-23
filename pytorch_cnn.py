@@ -21,25 +21,12 @@ def get_dataloaders(batch_size=32):
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
     test_loader = DataLoader(test_ds, batch_size=batch_size, shuffle=False)
     return train_loader, test_loader
-
-    # --- To use full MNIST instead (60k images, needs internet) ---
-    # import torchvision
-    # import torchvision.transforms as T
-    # transform = T.Compose([T.ToTensor()])
-    # train_ds = torchvision.datasets.MNIST(root="./data", train=True, download=True, transform=transform)
-    # test_ds = torchvision.datasets.MNIST(root="./data", train=False, download=True, transform=transform)
-    # train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
-    # test_loader = DataLoader(test_ds, batch_size=batch_size, shuffle=False)
-    # return train_loader, test_loader
-
-
-
 class DigitCNN(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=8, kernel_size=3, padding=1)
         self.relu1 = nn.ReLU()
-        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)  # 8x8 -> 4x4
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2) 
         self.flatten = nn.Flatten()
         self.fc1 = nn.Linear(8 * 4 * 4, 32)
         self.relu2 = nn.ReLU()
